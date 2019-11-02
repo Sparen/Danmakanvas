@@ -48,8 +48,17 @@ Now, for spawning bullets. We can run `new EnemyShot()` to accomplish this. The 
 
 The vanishtime field of the bullet (EnemyShot) object behaves in a special manner. If the provided value is greater than 0, then that denotes how many frames the bullet will exist for before deleting. Otherwise the bullet will be deleted when it exits the game bounds. By default, the game bounds are a 32 pixel buffer around the canvas.
 
-Like all JavaScript objects, it is possible to define a function and associate that function as part of the shot object. By default, the EnemyShot update runs a basic update that updates position, acceleration, and exist time. The EnemyShot `customupdate()` function can be manually overridden to induce interesting behavior, though this functionality has (as of time of writing) not been tested.
+Like all JavaScript objects, it is possible to define a function and associate that function as part of the shot object. By default, the EnemyShot update runs a basic update that updates position, acceleration, and exist time. The EnemyShot `customupdate()` function can be manually overridden to induce interesting behavior.
 
 ### Miscellaneous
 
 * There is no background color set for the canvas. Please use CSS for colors. We recommend a black or near-black background for the canvas as text defaults to white and as bullets tend to look better on a black background.
+
+### Examples
+
+Example scripts are documented here. In recommended reading order, these are:
+
+    1. Template; PluralModule_Template.js - Basic template for all Danmakanvas scripts
+    2. Example_Interval; PluralModule_Example_Interval.js - Example showcasing `everyinterval()` usage as well as basic bullet spawning
+    3. Example_Override; PluralModule_Example_Override.js - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior
+

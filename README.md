@@ -83,8 +83,9 @@ The following functions are provided as part of the Danmakanvas 'API':
 
 Example scripts are documented here. In recommended reading order, these are:
 
-1. Template; PluralModule_Template.js - Basic template for all Danmakanvas scripts  
-2. Example_Interval; PluralModule_Example_Interval.js - Example showcasing `everyinterval()` usage as well as basic bullet spawning  
-3. Example_Override; PluralModule_Example_Override.js - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior  
-4. Example_RingSpreadStack; PluralModule_Example_RingSpreadStack.js - Example showcasing usage of GetCenterX/Y and some ring and stack functions. Also covers `customupdate()` overriding with these functions and provides more detail  
+
+1. [Template](https://sparen.github.io/Danmakanvas/Examples/Template.html) - Basic template for all Danmakanvas scripts  
+2. [Example_Inverval](https://sparen.github.io/Danmakanvas/Examples/Example_Inverval.html) - Example showcasing `everyinterval()` usage as well as basic bullet spawning  
+3. [Example_Override](https://sparen.github.io/Danmakanvas/Examples/Example_Override.html) - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior  
+4. [Example_RingSpreadStack](https://sparen.github.io/Danmakanvas/Examples/Example_RingSpreadStack.html) - Example showcasing usage of GetCenterX/Y and some ring and stack functions. Also covers `customupdate()` overriding with these functions and provides more detail  
 

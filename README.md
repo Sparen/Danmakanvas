@@ -44,6 +44,12 @@ Danmakanvas comes with a number of potentially useful functions built into the m
 
 For actual control, `everyinterval()` allows for certain actions to be performed at a set rate. For example, `everyinterval(5)` will return true every five frames (e.g. 100, 200, 300, 400ms). Please note that Danmakanvas runs at 50 FPS rather than 60 FPS.
 
+Now, for spawning bullets. We can run `new EnemyShot()` to accomplish this. The constructor contains a lot of parameters - `EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)`. Most of these are obvious. Note that Danmakanvas currently only supports POSITIVE ACCELERATION. Slowing down a bullet to a lower max speed does NOT currently work. Color is a string, supporting all standard HTML supporte colors - including rgb(r,g,b) and hex notation (with the #).  The next three parameters control the visuals of the bullet - the bullet radius, stroke radius, and stroke width. Hitbox is currently not used but is locked in for futureproofing. 
+
+The vanishtime field of the bullet (EnemyShot) object behaves in a special manner. If the provided value is greater than 0, then that denotes how many frames the bullet will exist for before deleting. Otherwise the bullet will be deleted when it exits the game bounds. By default, the game bounds are a 32 pixel buffer around the canvas.
+
+Like all JavaScript objects, it is possible to define a function and associate that function as part of the shot object. By default, the EnemyShot update runs a basic update that updates position, acceleration, and exist time. The EnemyShot `customupdate()` function can be manually overridden to induce interesting behavior, though this functionality has (as of time of writing) not been tested.
+
 ### Miscellaneous
 
 * There is no background color set for the canvas. Please use CSS for colors. We recommend a black or near-black background for the canvas as text defaults to white and as bullets tend to look better on a black background.

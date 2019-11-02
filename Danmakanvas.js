@@ -162,7 +162,7 @@ function NewGame(canvasid, title) {
 /* **************** Object Constructors **************** */
 
 /* *****
- * obj EnemyShot(float x, float y, float speed, float angle, float accel, float maxspeed, hex/rgb color, float brad, float srad, float swid, int hitbox)
+ * obj EnemyShot(float x, float y, float speed, float angle, float accel, float maxspeed, hex/rgb color, float brad, float srad, float swid, int hitbox, int vanishtime, obj currgame)
  * -- Constructor for an enemy shot object.
  * Param: x, y - the location of the center of the bullet
  * Param: speed, angle - the speed and angle (radians) of the bullet
@@ -171,6 +171,8 @@ function NewGame(canvasid, title) {
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
  * Param: swid - the stroke radius of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
+ * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
+ * Param: currgame - game/Danmakanvas Instance the bullet belongs to
  * *****/
 function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame) {
     this.x = x;
@@ -184,12 +186,19 @@ function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid,
     this.existtime = 0;
     this.vanishtime = vanishtime;
     this.update = function () {
+        this.baseupdate();
+        this.customupdate();
+    };
+    this.baseupdate = function () {
         this.x += this.speed*Math.cos(this.angle);
         this.y += this.speed*Math.sin(this.angle);
         if (this.accel != 0) { //Only if accelerating
             this.speed = Math.min(this.maxspeed, this.speed + this.accel);
         }
         this.existtime += 1;
+    };
+    this.customupdate = function () {
+
     };
     this.draw = function () {
         let ctx = currgame.context; //game window

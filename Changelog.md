@@ -4,6 +4,10 @@ Only versions past 2.1 have their changes documented here.
 
 Source code and usage examples can be found on Github.
 
+### v2.2-dev2 [Nov 02, 2019]
+
+* Implemented `CreateRingA1()`, `CreateSpreadA1()`, `CreateStackA1()`, `CreateRingStackA1()`, and `CreateSpreadStackA1()`
+
 ### v2.2-dev1 [Nov 01, 2019]
 
 * Repository started

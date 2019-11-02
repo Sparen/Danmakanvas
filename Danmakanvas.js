@@ -225,3 +225,161 @@ function Player(x, y) {
     this.y = y;
     //update and draw are defined in the player javascript library
 }
+
+/* **************** Danmakanvas Functions **************** */
+
+/* *****
+ * obj GetCenterX(obj currgame)
+ * -- Returns the center x coordinate of the canvas
+ * Param: currgame - game/Danmakanvas Instance
+ * *****/
+function GetCenterX(currgame) {
+    return currgame.canvas.width / 2;
+}
+
+/* *****
+ * obj GetCenterY(obj currgame)
+ * -- Returns the center y coordinate of the canvas
+ * Param: currgame - game/Danmakanvas Instance
+ * *****/
+function GetCenterY(currgame) {
+    return currgame.canvas.height / 2;
+}
+
+/* *****
+ * obj[] CreateRingA1(int n, float x, float y, float speed, float angle, float accel, float maxspeed, hex/rgb color, float brad, float srad, float swid, int hitbox, int vanishtime, obj currgame)
+ * -- Creates n bullets in a ring and adds them to the current danmakanvas instance. Returns array containing created bullets
+ * Param: n - the number of bullets to create
+ * Param: x, y - the location of the center of the bullet
+ * Param: speed, angle - the speed and angle (radians) of the bullet
+ * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
+ * Param: color - the HTML representation of the bullet's outer stroke color.
+ * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
+ * Param: swid - the stroke radius of the bullet graphic
+ * Param: hitbox - the radius of the bullet hitbox
+ * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
+ * Param: currgame - game/Danmakanvas Instance
+ * *****/
+function CreateRingA1(n, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame) {
+	let i = 0;
+	let ringbullets = [];
+	for (i = 0; i < n; i += 1) {
+		let newshot = new EnemyShot(x, y, speed, angle + Math.PI*2/n*i, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame);
+		currgame.bullets.push(newshot);
+		ringbullets.push(newshot);
+	}
+	return ringbullets;
+}
+
+/* *****
+ * obj[] CreateSpreadA1(int n, float angoffset, float x, float y, float speed, float angle, float accel, float maxspeed, hex/rgb color, float brad, float srad, float swid, int hitbox, int vanishtime, obj currgame)
+ * -- Creates an n-way spread centered around the provided angle and adds them to the current danmakanvas instance. Returns array containing created bullets
+ * Param: n - the number of bullets to create
+ * Param: angoffset - the angle spacing between individual bullets, offset from the given angle
+ * Param: x, y - the location of the center of the bullet
+ * Param: speed, angle - the speed and angle (radians) of the bullet
+ * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
+ * Param: color - the HTML representation of the bullet's outer stroke color.
+ * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
+ * Param: swid - the stroke radius of the bullet graphic
+ * Param: hitbox - the radius of the bullet hitbox
+ * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
+ * Param: currgame - game/Danmakanvas Instance
+ * *****/
+function CreateSpreadA1(n, angoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame) {
+	let i = 0;
+	let spreadbullets = [];
+	for (i = -(n-1)/2; i < (n-1)/2 + 1; i += 1) {
+		let newshot = new EnemyShot(x, y, speed, angle + angoffset*i, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame);
+		currgame.bullets.push(newshot);
+		spreadbullets.push(newshot);
+	}
+	return spreadbullets;
+}
+
+/* *****
+ * obj[] CreateStackA1(int n, float spdoffset, float x, float y, float speed, float angle, float accel, float maxspeed, hex/rgb color, float brad, float srad, float swid, int hitbox, int vanishtime, obj currgame)
+ * -- Creates an n-stack starting from the given speed and adds them to the current danmakanvas instance. Returns array containing created bullets
+ * Param: n - the number of bullets to create
+ * Param: spdoffset - the speed difference between bullets, offset from the given speed
+ * Param: x, y - the location of the center of the bullet
+ * Param: speed, angle - the speed and angle (radians) of the bullet
+ * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
+ * Param: color - the HTML representation of the bullet's outer stroke color.
+ * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
+ * Param: swid - the stroke radius of the bullet graphic
+ * Param: hitbox - the radius of the bullet hitbox
+ * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
+ * Param: currgame - game/Danmakanvas Instance
+ * *****/
+function CreateStackA1(n, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame) {
+	let i = 0;
+	let stackbullets = [];
+	for (i = 0; i < n; i += 1) {
+		let newshot = new EnemyShot(x, y, speed + spdoffset*i, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame);
+		currgame.bullets.push(newshot);
+		stackbullets.push(newshot);
+	}
+	return stackbullets;
+}
+
+/* *****
+ * obj[] CreateRingStackA1(int n, int m, float spdoffset, float x, float y, float speed, float angle, float accel, float maxspeed, hex/rgb color, float brad, float srad, float swid, int hitbox, int vanishtime, obj currgame)
+ * -- Creates an m-stack of n bullets in a ring and adds them to the current danmakanvas instance. Returns array containing created bullets
+ * Param: n - the number of bullets to create
+ * Param: m - the number of rings in the stack
+ * Param: spdoffset - the speed difference between rings, offset from the given speed
+ * Param: x, y - the location of the center of the bullet
+ * Param: speed, angle - the speed and angle (radians) of the bullet
+ * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
+ * Param: color - the HTML representation of the bullet's outer stroke color.
+ * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
+ * Param: swid - the stroke radius of the bullet graphic
+ * Param: hitbox - the radius of the bullet hitbox
+ * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
+ * Param: currgame - game/Danmakanvas Instance
+ * *****/
+function CreateRingStackA1(n, m, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame) {
+	let i = 0;
+	let j = 0;
+	let ringbullets = [];
+	for (i = 0; i < n; i += 1) {
+		for (j = 0; j < m; j += 1) {
+			let newshot = new EnemyShot(x, y, speed + spdoffset*j, angle + Math.PI*2/n*i, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame);
+            currgame.bullets.push(newshot);
+			ringbullets.push(newshot);
+		}
+	}
+	return ringbullets;
+}
+
+/* *****
+ * obj[] CreateSpreadStackA1(int n, int m, float angoffset, float spdoffset, float x, float y, float speed, float angle, float accel, float maxspeed, hex/rgb color, float brad, float srad, float swid, int hitbox, int vanishtime, obj currgame)
+ * -- Creates an n-way m-stack centered around the provided angle and adds them to the current danmakanvas instance. Returns array containing created bullets
+ * Param: n - the number of bullets to create
+ * Param: m - the number of rings in the stack
+ * Param: angoffset - the angle spacing between individual bullets, offset from the given angle
+ * Param: spdoffset - the speed difference between spread waves, offset from the given speed
+ * Param: x, y - the location of the center of the bullet
+ * Param: speed, angle - the speed and angle (radians) of the bullet
+ * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
+ * Param: color - the HTML representation of the bullet's outer stroke color.
+ * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
+ * Param: swid - the stroke radius of the bullet graphic
+ * Param: hitbox - the radius of the bullet hitbox
+ * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
+ * Param: currgame - game/Danmakanvas Instance
+ * *****/
+function CreateSpreadStackA1(n, m, angoffset, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame) {
+	let i = 0;
+	let j = 0;
+	let spreadbullets = [];
+	for (i = -(n-1)/2; i < (n-1)/2 + 1; i += 1) {
+		for (j = 0; j < m; j += 1) {
+			let newshot = new EnemyShot(x, y, speed + spdoffset*j, angle + angoffset*i, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame);
+			currgame.bullets.push(newshot);
+			spreadbullets.push(newshot);
+		}
+	}
+	return spreadbullets;
+}

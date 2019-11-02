@@ -50,6 +50,31 @@ The vanishtime field of the bullet (EnemyShot) object behaves in a special manne
 
 Like all JavaScript objects, it is possible to define a function and associate that function as part of the shot object. By default, the EnemyShot update runs a basic update that updates position, acceleration, and exist time. The EnemyShot `customupdate()` function can be manually overridden to induce interesting behavior.
 
+### Available Functions
+
+The following functions are provided as part of the Danmakanvas Instance (`currgame`, passed by reference as a parameter):
+
+* `isinbounds(obj, wd, ht)` - Returns true if bullet is in the rectange created with (0, 0) and (wd, ht) with a 32 pixel buffer; false otherwise  
+* `toRadians(i)` - Returns i converted from degrees to radians  
+* `contains(a, obj)` - Returns true if a is present in the provided object; false otherwise  
+* `isEmpty(obj)` - Returns true if the provided object is empty; false otherwise  
+* `everyinterval(n)` - Returns true if the current frame count % n = 0; false otherwise  
+
+The following functions are provided as Object Constructors:
+
+* `EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an enemy shot with the provided parameters and returns the created object
+
+The following functions are provided as part of the Danmakanvas 'API':
+
+* `GetCenterX(currgame)` - Returns half the width of the canvas  
+* `GetCenterY(currgame)` - Returns half the height of the canvas  
+* `CreateRingA1(n, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates a n-way ring  
+* `CreateSpreadA1(n, angoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an n-way spread with the provided angle offset  
+* `CreateStackA1(n, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an n-stack with the provided speed offset  
+* `CreateRingStackA1(n, m, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Combination of CreateRingA1 and CreateStackA1  
+* `CreateSpreadStackA1(n, m, angoffset, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Combination of CreateSpreadA1 and CreateStackA1  
+
+
 ### Miscellaneous
 
 * There is no background color set for the canvas. Please use CSS for colors. We recommend a black or near-black background for the canvas as text defaults to white and as bullets tend to look better on a black background.
@@ -58,7 +83,8 @@ Like all JavaScript objects, it is possible to define a function and associate t
 
 Example scripts are documented here. In recommended reading order, these are:
 
-    1. Template; PluralModule_Template.js - Basic template for all Danmakanvas scripts
-    2. Example_Interval; PluralModule_Example_Interval.js - Example showcasing `everyinterval()` usage as well as basic bullet spawning
-    3. Example_Override; PluralModule_Example_Override.js - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior
+1. Template; PluralModule_Template.js - Basic template for all Danmakanvas scripts  
+2. Example_Interval; PluralModule_Example_Interval.js - Example showcasing `everyinterval()` usage as well as basic bullet spawning  
+3. Example_Override; PluralModule_Example_Override.js - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior  
+4. Example_RingSpreadStack; PluralModule_Example_RingSpreadStack.js - Example showcasing usage of GetCenterX/Y and some ring and stack functions. Also covers `customupdate()` overriding with these functions and provides more detail  
 

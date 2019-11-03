@@ -85,7 +85,7 @@ Example scripts are documented here. In recommended reading order, these are:
 
 
 1. [Template](https://sparen.github.io/Danmakanvas/Examples/Template.html) - Basic template for all Danmakanvas scripts  
-2. [Example_Inverval](https://sparen.github.io/Danmakanvas/Examples/Example_Inverval.html) - Example showcasing `everyinterval()` usage as well as basic bullet spawning  
+2. [Example_Interval](https://sparen.github.io/Danmakanvas/Examples/Example_Interval.html) - Example showcasing `everyinterval()` usage as well as basic bullet spawning  
 3. [Example_Override](https://sparen.github.io/Danmakanvas/Examples/Example_Override.html) - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior  
 4. [Example_RingSpreadStack](https://sparen.github.io/Danmakanvas/Examples/Example_RingSpreadStack.html) - Example showcasing usage of GetCenterX/Y and some ring and stack functions. Also covers `customupdate()` overriding with these functions and provides more detail  
 

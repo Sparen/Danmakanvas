@@ -69,16 +69,14 @@ function Single_1_Task_AngularVelocity(currgame) {
             let i = 0;
             if (attackcounter % 2 == 0) {
                 for (i = 0; i < 30; i += 1) {
-                    let newshot = new EnemyShot(320, 240, 3, Math.PI*2/30*i, 0, 5, "#00FFFF", 2, 4, 0.5, 4, -1, currgame);
+                    let newshot = new CreateShotA2(320, 240, 3, Math.PI*2/30*i, 0, 5, "#00FFFF", 2, 4, 0.5, 4, -1, currgame);
                     newshot.customupdate = function() {applywvel(newshot, 0.01);}
-                    currgame.bullets.push(newshot);
                 }
                 attackcounter += 1;
             } else {
                 for (i = 0; i < 30; i += 1) {
-                    let newshot = new EnemyShot(320, 240, 3, Math.PI*2/30*i, 0, 5, "#FF00FF", 2, 4, 0.5, 4, -1, currgame);
+                    let newshot = new CreateShotA2(320, 240, 3, Math.PI*2/30*i, 0, 5, "#FF00FF", 2, 4, 0.5, 4, -1, currgame);
                     newshot.customupdate = function() {applywvel(newshot, -0.01);}
-                    currgame.bullets.push(newshot);
                 }
                 attackcounter += 1;
             }
@@ -111,9 +109,8 @@ function Single_1_Task_Arrows(currgame) {
     this.update = function () {
         let i = 0;
         for (i = 0; i < 8; i += 1) {
-            let newshot = new EnemyShot(320, 240, 3, initangle + Math.PI*2/8*i, 0, 5, "#FFFF00", 2, 4, 0.5, 4, -1, currgame);
+            let newshot = new CreateShotA2(320, 240, 3, initangle + Math.PI*2/8*i, 0, 5, "#FFFF00", 2, 4, 0.5, 4, -1, currgame);
             newshot.customupdate = function() {applyzigzag(newshot, 15, Math.PI/3);}
-            currgame.bullets.push(newshot);
         }
 
         this.counter += 1;

@@ -60,8 +60,7 @@ function Single_1_Task_Interval(currgame, interval) {
     this.finished = false;
     this.update = function () {
         if (currgame.everyinterval(interval)) { 
-            var newshot = new EnemyShot(640/51/2 + 640/51*interval, 32, 3, Math.PI/2, 0, 5, "rgb(" + (Math.sin(interval)*255) + "," + (Math.cos(interval)*255) + "," + (Math.sin(interval*2)*255) + ")", 3, 5, 0.75, 4, -1, currgame);
-            currgame.bullets.push(newshot);
+            var newshot = new CreateShotA2(640/51/2 + 640/51*interval, 32, 3, Math.PI/2, 0, 5, "rgb(" + (Math.sin(interval)*255) + "," + (Math.cos(interval)*255) + "," + (Math.sin(interval*2)*255) + ")", 3, 5, 0.75, 4, -1, currgame);
         }
 
         this.counter += 1;

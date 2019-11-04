@@ -33,7 +33,7 @@ function Single_1(currgame) {
     let currdir = 1;
     this.update = function () { // Main Loop for a given Danmakanvas Instance
         if (currgame.everyinterval(50)) { 
-            let bullets = CreateRingStackA1(20, 5, 0.1, GetCenterX(currgame), GetCenterY(currgame), 0, Math.random() * Math.PI*2, 0.01, 12, "#FF00FF", 2, 3, 0.5, 1, -1, currgame);
+            let bullets = CreateRingStackA2(20, 5, 0.1, GetCenterX(currgame), GetCenterY(currgame), 0, Math.random() * Math.PI*2, 0.01, 12, "#FF00FF", 2, 3, 0.5, 1, -1, currgame);
             let objctr = 0;
             for (objctr = 0; objctr < bullets.length; objctr += 1) {
                 let currbullet = bullets[objctr];
@@ -74,10 +74,10 @@ function Single_1_Task_SpreadShot(currgame) {
         if (currgame.everyinterval(12)) { 
             let dx = 60*Math.cos(currangle);
             let dy = 60*Math.sin(currangle);
-            CreateSpreadStackA1(3, 5, Math.PI/12, 0.5, GetCenterX(currgame) + dx, GetCenterY(currgame) + dy, 2, currangle, 0, 0, "#0066FF", 4, 6, 1, 1, -1, currgame);
-            CreateStackA1(5, 0.25, GetCenterX(currgame), GetCenterY(currgame), 3, currangle + Math.PI/2, 0, 0, "#FFFF00", 5, 7, 1, 1, -1, currgame);
-            CreateSpreadStackA1(3, 5, Math.PI/12, 0.5, GetCenterX(currgame) - dx, GetCenterY(currgame) - dy, 2, currangle + Math.PI, 0, 0, "#0066FF", 4, 6, 1, 1, -1, currgame);
-            CreateStackA1(5, 0.25, GetCenterX(currgame), GetCenterY(currgame), 3, currangle - Math.PI/2, 0, 0, "#FFFF00", 5, 7, 1, 1, -1, currgame);
+            CreateSpreadStackA1(3, 5, Math.PI/12, 0.5, GetCenterX(currgame) + dx, GetCenterY(currgame) + dy, 2, currangle, "#0066FF", 4, 6, 1, 1, currgame);
+            CreateStackA1(5, 0.25, GetCenterX(currgame), GetCenterY(currgame), 3, currangle + Math.PI/2, "#FFFF00", 5, 7, 1, 1, currgame);
+            CreateSpreadStackA1(3, 5, Math.PI/12, 0.5, GetCenterX(currgame) - dx, GetCenterY(currgame) - dy, 2, currangle + Math.PI, "#0066FF", 4, 6, 1, 1, currgame);
+            CreateStackA1(5, 0.25, GetCenterX(currgame), GetCenterY(currgame), 3, currangle - Math.PI/2, "#FFFF00", 5, 7, 1, 1, currgame);
             currangle += Math.PI*2/7; // Divide by a prime number to ensure that bullets don't spawn in same locations for a long time
         }
 

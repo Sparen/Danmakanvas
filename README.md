@@ -44,11 +44,13 @@ Danmakanvas comes with a number of potentially useful functions built into the m
 
 For actual control, `everyinterval()` allows for certain actions to be performed at a set rate. For example, `everyinterval(5)` will return true every five frames (e.g. 100, 200, 300, 400ms). Please note that Danmakanvas runs at 50 FPS rather than 60 FPS.
 
-Now, for spawning bullets. We can run `new EnemyShot()` to accomplish this. The constructor contains a lot of parameters - `EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)`. Most of these are obvious. Note that Danmakanvas currently only supports POSITIVE ACCELERATION. Slowing down a bullet to a lower max speed does NOT currently work. Color is a string, supporting all standard HTML supporte colors - including rgb(r,g,b) and hex notation (with the #).  The next three parameters control the visuals of the bullet - the bullet radius, stroke radius, and stroke width. Hitbox is currently not used but is locked in for futureproofing. 
+Now, for spawning bullets. We can run `new EnemyShot()` to accomplish this (or one of the provided bullet creation functions). The constructor contains a lot of parameters - `EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)`. Most of these are obvious. Note that Danmakanvas currently only supports POSITIVE ACCELERATION. Slowing down a bullet to a lower max speed does NOT currently work. Color is a string, supporting all standard HTML supporte colors - including rgb(r,g,b) and hex notation (with the #). The next three parameters control the visuals of the bullet - the bullet radius, stroke radius, and stroke width. Hitbox is currently not used but is locked in for futureproofing. 
 
 The vanishtime field of the bullet (EnemyShot) object behaves in a special manner. If the provided value is greater than 0, then that denotes how many frames the bullet will exist for before deleting. Otherwise the bullet will be deleted when it exits the game bounds. By default, the game bounds are a 32 pixel buffer around the canvas.
 
 Like all JavaScript objects, it is possible to define a function and associate that function as part of the shot object. By default, the EnemyShot update runs a basic update that updates position, acceleration, and exist time. The EnemyShot `customupdate()` function can be manually overridden to induce interesting behavior.
+
+Note that as of v2.2-dev3, there are a variety of bullet creation functions that can be used instead of the base constructor. These functions all automatically handle adding a bullet to the Danmakanvas Instance currently running. It is recommended that these be used instead of the default constructor in all cases.
 
 ### Available Functions
 
@@ -66,13 +68,28 @@ The following functions are provided as Object Constructors:
 
 The following functions are provided as part of the Danmakanvas 'API':
 
+General Functions:
+
 * `GetCenterX(currgame)` - Returns half the width of the canvas  
 * `GetCenterY(currgame)` - Returns half the height of the canvas  
-* `CreateRingA1(n, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates a n-way ring  
-* `CreateSpreadA1(n, angoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an n-way spread with the provided angle offset  
-* `CreateStackA1(n, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an n-stack with the provided speed offset  
-* `CreateRingStackA1(n, m, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Combination of CreateRingA1 and CreateStackA1  
-* `CreateSpreadStackA1(n, m, angoffset, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Combination of CreateSpreadA1 and CreateStackA1  
+
+Bullet Creation Functions:
+
+- A1 variants set acceleration and max speed to 0 and set vanishtime to -1 (bullets only delete when out of bounds)
+- All bullet creation functions add the bullets to the game's list of bullets automatically
+
+* `CreateShotA1(n, x, y, speed, angle, color, brad, srad, swid, hitbox, currgame)` - Creates a bullet  
+* `CreateShotA2(n, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates a bullet  
+* `CreateRingA1(n, x, y, speed, angle, color, brad, srad, swid, hitbox, currgame)` - Creates a n-way ring  
+* `CreateRingA2(n, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates a n-way ring  
+* `CreateSpreadA1(n, angoffset, x, y, speed, angle, color, brad, srad, swid, hitbox, currgame)` - Creates an n-way spread with the provided angle offset  
+* `CreateSpreadA2(n, angoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an n-way spread with the provided angle offset  
+* `CreateStackA1(n, spdoffset, x, y, speed, angle, color, brad, srad, swid, hitbox, currgame)` - Creates an n-stack with the provided speed offset  
+* `CreateStackA2(n, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an n-stack with the provided speed offset  
+* `CreateRingStackA1(n, m, spdoffset, x, y, speed, angle, color, brad, srad, swid, hitbox, currgame)` - Combination of CreateRingA1 and CreateStackA1  
+* `CreateRingStackA2(n, m, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Combination of CreateRingA1 and CreateStackA1  
+* `CreateSpreadStackA1(n, m, angoffset, spdoffset, x, y, speed, angle, color, brad, srad, swid, hitbox, currgame)` - Combination of CreateSpreadA1 and CreateStackA1  
+* `CreateSpreadStackA2(n, m, angoffset, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Combination of CreateSpreadA1 and CreateStackA1  
 
 
 ### Miscellaneous

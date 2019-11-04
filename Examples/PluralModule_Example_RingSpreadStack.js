@@ -94,37 +94,3 @@ function Single_1_Task_SpreadShot(currgame) {
 function applywvel(target, wvel) {
     target.angle += wvel;
 }
-
-function Single_1_Task_SpreadRing(currgame, dir) {
-    this.counter = 0;
-    this.maxcounter = 25; // Maximum time allowed for task to run. Use -1 for non-terminating tasks
-    this.finished = false;
-    this.update = function () {
-        if (currgame.everyinterval(5)) { 
-            let bullets = CreateRingStackA1(20, 5, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame);
-            let i = 0;
-            if (attackcounter % 2 == 0) {
-                for (i = 0; i < 30; i += 1) {
-                    let newshot = new EnemyShot(320, 240, 3, Math.PI*2/30*i, 0, 5, "#00FFFF", 2, 4, 0.5, 4, -1, currgame);
-                    newshot.customupdate = function() {applywvel(newshot, 0.01);}
-                    currgame.bullets.push(newshot);
-                }
-                attackcounter += 1;
-            } else {
-                for (i = 0; i < 30; i += 1) {
-                    let newshot = new EnemyShot(320, 240, 3, Math.PI*2/30*i, 0, 5, "#FF00FF", 2, 4, 0.5, 4, -1, currgame);
-                    newshot.customupdate = function() {applywvel(newshot, -0.01);}
-                    currgame.bullets.push(newshot);
-                }
-                attackcounter += 1;
-            }
-        }
-
-        this.counter += 1;
-        if (this.counter === this.maxcounter) {
-            this.finished = true;
-        }
-    }
-    this.remove = function () { // Deconstructor. Called by the Single object. Destroy any subtasks or objects created by the task here.
-    }
-}

@@ -106,3 +106,11 @@ Example scripts are documented here. In recommended reading order, these are:
 3. [Example_Override](https://sparen.github.io/Danmakanvas/Examples/Example_Override.html) - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior  
 4. [Example_RingSpreadStack](https://sparen.github.io/Danmakanvas/Examples/Example_RingSpreadStack.html) - Example showcasing usage of GetCenterX/Y and some ring and stack functions. Also covers `customupdate()` overriding with these functions and provides more detail  
 
+### Future Work
+
+Listed in no particular order:
+
+- Internal control of text  
+- Support for multiple singles with progression  
+- Forceful deletion of bullets (e.g. in task `remove()`)
+

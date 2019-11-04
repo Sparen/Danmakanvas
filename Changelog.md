@@ -6,7 +6,8 @@ Source code and usage examples can be found on Github.
 
 ### v2.2-dev3 [Nov 03, 2019]
 * Moved existing A1 variants to the A2 designation and created separate A1 designations for all existing bullet creation functions  
-* Implemented `CreateShotA1()` and `CreateShotA2()`
+* Implemented `CreateShotA1()` and `CreateShotA2()`  
+* Implemented `DeleteShot()`  
 
 ### v2.2-dev2 [Nov 02, 2019]
 

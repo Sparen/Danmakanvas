@@ -85,32 +85,32 @@ function NewGame(canvasid, title) {
 
     //Main update loop. Calls the update loops of all objects and handles collision.
     //Since it's called in a setInterval, it is necessary to pass the current instance of the game object in as a parameter
-    this.update_main = function (currobj) {
-        currobj.clearCanvas(); //Begin by clearing everything
-        currobj.frameNo += 1; //Increment the master counter
+    this.update_main = function (currgame) {
+        currgame.clearCanvas(); //Begin by clearing everything
+        currgame.frameNo += 1; //Increment the master counter
 
-        currobj.pluralcontroller.update();
+        currgame.pluralcontroller.update();
 
         let objtoremove = [];
         let i;
-        for (i = 0; i < currobj.bullets.length; i += 1) {
-            currobj.bullets[i].update();
-            if (!currobj.isinbounds(currobj.bullets[i], currobj.canvas.width, currobj.canvas.height)) {
+        for (i = 0; i < currgame.bullets.length; i += 1) {
+            currgame.bullets[i].update();
+            if (!currgame.isinbounds(currgame.bullets[i], currgame.canvas.width, currgame.canvas.height)) {
                 objtoremove.push(i);
-            } else if (currobj.bullets[i].vanishtime > 0 && currobj.bullets[i].existtime > currobj.bullets[i].vanishtime) {
+            } else if (currgame.bullets[i].vanishtime > 0 && currgame.bullets[i].existtime > currgame.bullets[i].vanishtime) {
                 objtoremove.push(i);
             }
         }
         for (i = objtoremove.length - 1; i >= 0; i -= 1) {
-            currobj.bullets.splice(objtoremove[i], 1);
+            currgame.bullets.splice(objtoremove[i], 1);
         }
 
-        currobj.draw_main(canvasid); //draw updated things 
+        currgame.draw_main(canvasid); //draw updated things 
 
-        currobj.context.fillStyle = "#FFFFFF";
-        currobj.context.font = "12px Arial";
-        currobj.context.fillText(VERSION_NUMBER_DANMAKANVAS + " ~ " + title, 4, 12);
-        currobj.context.fillText("Bullet Count: " + (currobj.bullets.length).toString(), 4, currobj.canvas.height - 4);
+        currgame.context.fillStyle = "#FFFFFF";
+        currgame.context.font = "12px Arial";
+        currgame.context.fillText(VERSION_NUMBER_DANMAKANVAS + " ~ " + title, 4, 12);
+        currgame.context.fillText("Bullet Count: " + (currgame.bullets.length).toString(), 4, currgame.canvas.height - 4);
     };
 
     //Main draw loop. Handles render order.
@@ -138,11 +138,11 @@ function NewGame(canvasid, title) {
             return false;
         }
         return true;
-    }
+    };
 
     this.toRadians = function (i) {
         return i * (Math.PI/180);
-    }
+    };
 
     this.contains = function (a, obj) {
         let i = a.length;
@@ -152,11 +152,11 @@ function NewGame(canvasid, title) {
            }
         }
         return false;
-    }
+    };
 
     this.isEmpty = function (obj) {
         return Object.keys(obj).length === 0;
-    }
+    };
 }
 
 /* **************** Object Constructors **************** */
@@ -246,6 +246,22 @@ function GetCenterX(currgame) {
  * *****/
 function GetCenterY(currgame) {
     return currgame.canvas.height / 2;
+}
+
+/* *****
+ * obj DeleteShot(obj bullet, obj currgame)
+ * -- Deletes the bullet from the game
+ * Param: bullet - EnemyShot object
+ * Param: currgame - game/Danmakanvas Instance
+ * *****/
+function DeleteShot(bullet, currgame) {
+    let i = 0;
+    for (i = 0; i < currgame.bullets.length; i += 1) {
+        if (currgame.bullets[i] === bullet) {
+            currgame.bullets.splice(i, 1);
+            break;
+        }
+    }
 }
 
 /* **************** Bullet Creation Functions **************** */

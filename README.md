@@ -72,6 +72,7 @@ General Functions:
 
 * `GetCenterX(currgame)` - Returns half the width of the canvas  
 * `GetCenterY(currgame)` - Returns half the height of the canvas  
+* `DeleteShot(bullet, currgame)` - Deletes the bullet from the game  
 
 Bullet Creation Functions:
 
@@ -112,5 +113,4 @@ Listed in no particular order:
 
 - Internal control of text  
 - Support for multiple singles with progression  
-- Forceful deletion of bullets (e.g. in task `remove()`)
 

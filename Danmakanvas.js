@@ -189,6 +189,15 @@ function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid,
     this.angle = angle;
     this.accel = accel;
     this.maxspeed = maxspeed;
+    this.color = color;
+    this.graphic = "CIRCLE"; // Default, must be manually overridden.
+    this.brad = brad;
+    this.srad = srad;
+    this.srad2 = 0.0; // Used for certain graphic styles
+    this.swid = swid;
+    this.directed = false; // If true, angles the graphic with the angle of the bullet
+    this.rotation = 0; // If nonzero, rotates at the specified angle, overriding directed
+    this.graphicangle = 0; // Graphic angle. Tied to rotation and directed.
     this.hitbox = hitbox;
     this.createtime = currgame.frameNo;
     this.existtime = 0;
@@ -203,6 +212,12 @@ function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid,
         if (this.accel != 0) { //Only if accelerating
             this.speed = Math.min(this.maxspeed, this.speed + this.accel);
         }
+        if (this.directed) {
+            this.graphicangle = this.angle;
+        }
+        if (this.rotation !== 0) {
+            this.graphicangle += this.rotation;
+        }
         this.existtime += 1;
     };
     this.customupdate = function () {
@@ -212,13 +227,26 @@ function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid,
         let ctx = currgame.context; //game window
         ctx.fillStyle = "#FFFFFF";
         ctx.beginPath();
-        ctx.arc(this.x, this.y, brad, 0, 2*Math.PI);
+        ctx.arc(this.x, this.y, this.brad, 0, 2*Math.PI);
         ctx.fill();
-        ctx.strokeStyle = color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, srad, 0, 2*Math.PI);
-        ctx.lineWidth = swid;
-        ctx.stroke();
+
+        if (this.graphic == "CIRCLE") { // Default
+            ctx.strokeStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.srad, 0, 2*Math.PI);
+            ctx.lineWidth = this.swid;
+            ctx.stroke();
+        } else if (this.graphic == "DIAMOND") {
+            ctx.strokeStyle = this.color;
+            ctx.beginPath();
+            ctx.moveTo(this.x + this.srad2 * Math.cos(this.graphicangle), this.y + this.srad2 * Math.sin(this.graphicangle));
+            ctx.lineTo(this.x + this.srad * Math.cos(this.graphicangle + Math.PI/2), this.y + this.srad * Math.sin(this.graphicangle + Math.PI/2));
+            ctx.lineTo(this.x + this.srad2 * Math.cos(this.graphicangle + Math.PI), this.y + this.srad2 * Math.sin(this.graphicangle + Math.PI));
+            ctx.lineTo(this.x + this.srad * Math.cos(this.graphicangle - Math.PI/2), this.y + this.srad * Math.sin(this.graphicangle - Math.PI/2));
+            ctx.closePath();
+            ctx.lineWidth = this.swid;
+            ctx.stroke();
+        }
     };
     return this;
 }
@@ -314,7 +342,7 @@ function DeleteShot(bullet, currgame) {
  * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
  * Param: currgame - game/Danmakanvas Instance the bullet belongs to
@@ -333,7 +361,7 @@ function CreateShotA1(x, y, speed, angle, color, brad, srad, swid, hitbox, currg
  * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
  * Param: currgame - game/Danmakanvas Instance the bullet belongs to
@@ -353,7 +381,7 @@ function CreateShotA2(x, y, speed, angle, accel, maxspeed, color, brad, srad, sw
  * Param: speed, angle - the speed and angle (radians) of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: currgame - game/Danmakanvas Instance
  * *****/
@@ -377,7 +405,7 @@ function CreateRingA1(n, x, y, speed, angle, color, brad, srad, swid, hitbox, cu
  * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
  * Param: currgame - game/Danmakanvas Instance
@@ -403,7 +431,7 @@ function CreateRingA2(n, x, y, speed, angle, accel, maxspeed, color, brad, srad,
  * Param: speed, angle - the speed and angle (radians) of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: currgame - game/Danmakanvas Instance
  * *****/
@@ -428,7 +456,7 @@ function CreateSpreadA1(n, angoffset, x, y, speed, angle, color, brad, srad, swi
  * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
  * Param: currgame - game/Danmakanvas Instance
@@ -454,7 +482,7 @@ function CreateSpreadA2(n, angoffset, x, y, speed, angle, accel, maxspeed, color
  * Param: speed, angle - the speed and angle (radians) of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: currgame - game/Danmakanvas Instance
  * *****/
@@ -479,7 +507,7 @@ function CreateStackA1(n, spdoffset, x, y, speed, angle, color, brad, srad, swid
  * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
  * Param: currgame - game/Danmakanvas Instance
@@ -506,7 +534,7 @@ function CreateStackA2(n, spdoffset, x, y, speed, angle, accel, maxspeed, color,
  * Param: speed, angle - the speed and angle (radians) of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: currgame - game/Danmakanvas Instance
  * *****/
@@ -535,7 +563,7 @@ function CreateRingStackA1(n, m, spdoffset, x, y, speed, angle, color, brad, sra
  * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
  * Param: currgame - game/Danmakanvas Instance
@@ -566,7 +594,7 @@ function CreateRingStackA2(n, m, spdoffset, x, y, speed, angle, accel, maxspeed,
  * Param: speed, angle - the speed and angle (radians) of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: currgame - game/Danmakanvas Instance
  * *****/
@@ -596,7 +624,7 @@ function CreateSpreadStackA1(n, m, angoffset, spdoffset, x, y, speed, angle, col
  * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
  * Param: color - the HTML representation of the bullet's outer stroke color.
  * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
- * Param: swid - the stroke radius of the bullet graphic
+ * Param: swid - the stroke width of the bullet graphic
  * Param: hitbox - the radius of the bullet hitbox
  * Param: vanishtime - if greater than 0, the duration before the bullet is deleted
  * Param: currgame - game/Danmakanvas Instance
@@ -616,6 +644,29 @@ function CreateSpreadStackA2(n, m, angoffset, spdoffset, x, y, speed, angle, acc
 }
 
 /* **************** Object Functions **************** */
+
+/* *****
+ * obj SetShotGraphic(obj shot, string graphic, hex/rgb color, float brad, float srad, float swid, float swid2, bool directed, float rotation)
+ * -- Sets the graphic of a given shot
+ * Param: shot - the shot to apply changes to
+ * Param: graphic - the graphic type to use for this shot. Must be from predefined list.
+ * Param: color - the HTML representation of the bullet's outer stroke color.
+ * Param: brad, srad - the radius of the bullet graphic and the radius of the bullet stroke
+ * Param: srad2 - the second stroke radius of the bullet graphic, used for stretching non-radial bullets. Set to 0 for CIRCLE
+ * Param: swid - the stroke width of the bullet graphic
+ * Param: directed - whether or not the bullet's rotation angle is set to its movement angle
+ * Param: rotation - rotation per frame, in radians. Set to 0 if the bullet should not rotate.
+ * *****/
+function SetShotGraphic(shot, graphic, color, brad, srad, srad2, swid, directed, rotation) {
+    shot.graphic = graphic;
+    shot.color = color;
+    shot.brad = brad;
+    shot.srad = srad;
+    shot.srad2 = srad2;
+    shot.swid = swid;
+    shot.directed = directed;
+    shot.rotation = rotation;
+}
 
 /* *****
  * obj CreateText(float x, float y, hex/rgb fillStyle, string font, string textAlign, string content, obj currgame)

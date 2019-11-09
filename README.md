@@ -10,7 +10,7 @@ This repository serves as a home for the repository for development on v2.2 onwa
 
 ## Limitations
 
-Due to the nature of this project having shifted to pattern prototyping, there is currently no support for custom graphics, player scripts, multiple attacks in a row, sound, etc. 
+Due to the nature of this project having shifted to pattern prototyping, there is currently no support for custom PNG graphics, player scripts, multiple attacks in a row, sound, etc. 
 
 This project is currently not accepting contributions in the form of code. If bugs are encountered, please post an Issue here on GitHub.
 
@@ -96,8 +96,16 @@ Bullet Creation Functions:
 
 Object Functions:
 
+* `SetShotGraphic(shot, graphic, color, brad, srad, srad2, swid, directed, rotation)` - Changes the graphics settings for an Enemy Shot  
 * `CreateText(x, y, fillStyle, font, textAlign, content, currgame)` - Creates a text object
 
+### Bullet Graphics
+
+Bullet Graphics default to a circle for the stroke. However, by using `SetShotGraphic()`, this can be changed.
+
+Modes:  
+* `CIRCLE` - Default. Stroke renders as a circle with `srad` radius  
+* `DIAMOND` - Used for squares and rhombi. Stroke renders as a rhombus with `srad` controlling the principal axis in the direction it faces and `srad2` controlling the secondary axis perpendicular to the direction it faces. It is recommended to use the `directed` field for rhombi.  
 
 ### Miscellaneous
 
@@ -111,6 +119,7 @@ Example scripts are documented here. In recommended reading order, these are:
 2. [Example_Interval](https://sparen.github.io/Danmakanvas/Examples/Example_Interval.html) - Example showcasing `everyinterval()` usage as well as basic bullet spawning  
 3. [Example_Override](https://sparen.github.io/Danmakanvas/Examples/Example_Override.html) - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior  
 4. [Example_RingSpreadStack](https://sparen.github.io/Danmakanvas/Examples/Example_RingSpreadStack.html) - Example showcasing usage of GetCenterX/Y and some ring and stack functions. Also covers `customupdate()` overriding with these functions and provides more detail  
+5. [Example_Graphics](https://sparen.github.io/Danmakanvas/Examples/Example_Graphics.html) - Example showcasing usage of `SetShotGraphics()` with rhombi and squares. Demonstrates both the `directed` option and the standard rotating option.  
 
 ### Future Work
 

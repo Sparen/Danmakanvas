@@ -1,4 +1,4 @@
-//Plural Module - Example - Override
+//Plural Module - Example - RingSpreadStack
 
 "use strict";
 

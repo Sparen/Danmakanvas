@@ -36,6 +36,7 @@ function createNewGame(canvasid, title) {
 function NewGame(canvasid, title) {
     this.player = {}; //player
     this.bullets = []; //array containing all bullets
+    this.text = []; //array containing all text objects
     this.pluralcontroller = {}; //Current plural running
     this.canvas = document.getElementById(canvasid);
     this.context = this.canvas.getContext("2d");
@@ -62,6 +63,11 @@ function NewGame(canvasid, title) {
             startedplurals.push(canvasid);
             this.setupInterval(20);
         }
+
+        // Set up standard text objects
+        CreateText(4, 12, "#FFFFFF", "12px Arial", "left", VERSION_NUMBER_DANMAKANVAS, this);
+        CreateText(4, 24, "#FFFFFF", "12px Arial", "left", title, this);
+        this.bulletCountText = CreateText(4, this.canvas.height - 4, "#FFFFFF", "12px Arial", "left", "Bullet Count: " + (this.bullets.length).toString(), this);
     };
 
     this.setupInterval = function(updatefreq) {
@@ -72,6 +78,7 @@ function NewGame(canvasid, title) {
     this.resetGame = function () {
         this.player = {};
         this.bullets = [];
+        this.text = [];
         if (this.pluralcontroller !== undefined && this.pluralcontroller !== null && !this.isEmpty(this.pluralcontroller)) {
             this.pluralcontroller.remove(); //Forcefully garbage collect all ongoing singles and plurals
         }
@@ -105,12 +112,10 @@ function NewGame(canvasid, title) {
             currgame.bullets.splice(objtoremove[i], 1);
         }
 
-        currgame.draw_main(canvasid); //draw updated things 
+        // Update metrics reporting
+        currgame.bulletCountText.content = "Bullet Count: " + (currgame.bullets.length).toString();
 
-        currgame.context.fillStyle = "#FFFFFF";
-        currgame.context.font = "12px Arial";
-        currgame.context.fillText(VERSION_NUMBER_DANMAKANVAS + " ~ " + title, 4, 12);
-        currgame.context.fillText("Bullet Count: " + (currgame.bullets.length).toString(), 4, currgame.canvas.height - 4);
+        currgame.draw_main(canvasid); //draw updated things 
     };
 
     //Main draw loop. Handles render order.
@@ -118,6 +123,9 @@ function NewGame(canvasid, title) {
         let i;
         for (i = 0; i < this.bullets.length; i += 1) {
             this.bullets[i].draw();
+        }
+        for (i = 0; i < this.text.length; i += 1) {
+            this.text[i].draw();
         }
     };
 
@@ -216,6 +224,37 @@ function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid,
 }
 
 /* *****
+ * obj DMKText(float x, float y, hex/rgb fillStyle, string font, string textAlign, string content, obj currgame)
+ * -- Constructor for a Danmakanvas Text object.
+ * Param: x, y - the location of the text
+ * Param: fillStyle - the color of the text
+ * Param: font - the font of the text
+ * Param: textAlign - the text alignment of the text. Possible values are start, end, left, center, and right
+ * Param: content - the content of the text
+ * Param: currgame - game/Danmakanvas Instance the bullet belongs to
+ * *****/
+function DMKText(x, y, fillStyle, font, textAlign, content, currgame) {
+	this.x = x;
+    this.y = y;
+    this.fillStyle = fillStyle;
+    this.font = font;
+    this.textAlign = textAlign;
+    this.content = content;
+    this.createtime = currgame.frameNo;
+    this.existtime = 0;
+    this.update = function () {
+    };
+    this.draw = function () {
+        let ctx = currgame.context; //game window
+        ctx.fillStyle = this.fillStyle;
+        ctx.font = this.font;
+        ctx.textAlign = this.textAlign;
+        ctx.fillText(this.content, this.x, this.y);
+    };
+    return this;
+}
+
+/* *****
  * obj Player(float x, float y)
  * -- Constructor for an extendible player object.
  * Param: x, y - the location of the center of the player
@@ -268,7 +307,7 @@ function DeleteShot(bullet, currgame) {
 
 /* *****
  * obj CreateShotA1(float x, float y, float speed, float angle, hex/rgb color, float brad, float srad, float swid, int hitbox, obj currgame)
- * -- Creates an enemy shot object.
+ * -- Creates an enemy shot object. Returns EnemyShot object.
  * -- A1 option sets speed and acceleration to 0 and sets vanishtime to -1 (deletion only when out of bounds)
  * Param: x, y - the location of the center of the bullet
  * Param: speed, angle - the speed and angle (radians) of the bullet
@@ -288,7 +327,7 @@ function CreateShotA1(x, y, speed, angle, color, brad, srad, swid, hitbox, currg
 
 /* *****
  * obj CreateShotA2(float x, float y, float speed, float angle, float accel, float maxspeed, hex/rgb color, float brad, float srad, float swid, int hitbox, int vanishtime, obj currgame)
- * -- Creates an enemy shot object.
+ * -- Creates an enemy shot object. Returns EnemyShot object.
  * Param: x, y - the location of the center of the bullet
  * Param: speed, angle - the speed and angle (radians) of the bullet
  * Param: accel, maxspeed - the acceleration and maximum speed of the bullet
@@ -574,4 +613,22 @@ function CreateSpreadStackA2(n, m, angoffset, spdoffset, x, y, speed, angle, acc
 		}
 	}
 	return spreadbullets;
+}
+
+/* **************** Object Functions **************** */
+
+/* *****
+ * obj CreateText(float x, float y, hex/rgb fillStyle, string font, string textAlign, string content, obj currgame)
+ * -- Creates a text object and adds it to the current danmakanvas instance. Returns created Danmakanvas Text Object
+ * Param: x, y - the location of the text
+ * Param: fillStyle - the color of the text
+ * Param: font - the font of the text
+ * Param: textAlign - the text alignment of the text. Possible values are start, end, left, center, and right
+ * Param: content - the content of the text
+ * Param: currgame - game/Danmakanvas Instance the bullet belongs to
+ * *****/
+function CreateText(x, y, fillStyle, font, textAlign, content, currgame) {
+	let newtext = new DMKText(x, y, fillStyle, font, textAlign, content, currgame);
+	currgame.text.push(newtext);
+	return newtext;
 }

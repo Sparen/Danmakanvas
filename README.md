@@ -62,9 +62,11 @@ The following functions are provided as part of the Danmakanvas Instance (`currg
 * `isEmpty(obj)` - Returns true if the provided object is empty; false otherwise  
 * `everyinterval(n)` - Returns true if the current frame count % n = 0; false otherwise  
 
-The following functions are provided as Object Constructors:
+The following functions are provided as Object Constructors:  
+Note that these should not be used as they have proper wrappers that reduce some of the overhead. If they must be used, please note that they must be called with `new`.  
 
-* `EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an enemy shot with the provided parameters and returns the created object
+* `EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an enemy shot with the provided parameters and returns the created object  
+* `DMKText(x, y, fillStyle, font, textAlign, content, currgame)` - Creates a Danmakanvas text object with the provided parameters and returns the created object.  
 
 The following functions are provided as part of the Danmakanvas 'API':
 
@@ -92,6 +94,10 @@ Bullet Creation Functions:
 * `CreateSpreadStackA1(n, m, angoffset, spdoffset, x, y, speed, angle, color, brad, srad, swid, hitbox, currgame)` - Combination of CreateSpreadA1 and CreateStackA1  
 * `CreateSpreadStackA2(n, m, angoffset, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Combination of CreateSpreadA1 and CreateStackA1  
 
+Object Functions:
+
+* `CreateText(x, y, fillStyle, font, textAlign, content, currgame)` - Creates a text object
+
 
 ### Miscellaneous
 
@@ -100,7 +106,6 @@ Bullet Creation Functions:
 ### Examples
 
 Example scripts are documented here. In recommended reading order, these are:
-
 
 1. [Template](https://sparen.github.io/Danmakanvas/Examples/Template.html) - Basic template for all Danmakanvas scripts  
 2. [Example_Interval](https://sparen.github.io/Danmakanvas/Examples/Example_Interval.html) - Example showcasing `everyinterval()` usage as well as basic bullet spawning  
@@ -111,6 +116,6 @@ Example scripts are documented here. In recommended reading order, these are:
 
 Listed in no particular order:
 
-- Internal control of text  
+- Lasers
 - Support for multiple singles with progression  
 

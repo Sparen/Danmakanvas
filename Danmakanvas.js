@@ -15,7 +15,7 @@
 //Constructors should start in Uppercase. Variables should be in camelCase.
 //Variables and Functions are hoisted (they can be used before they are declared)
 
-//Global variables (use sparingly)
+//Global letiables (use sparingly)
 let startedplurals = []; //array containing IDs of all canvases that have already initiated.
 
 //Version number
@@ -253,6 +253,68 @@ function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid,
             ctx.lineTo(this.x + this.srad2 * Math.cos(this.graphicangle + Math.PI*2/3), this.y + this.srad2 * Math.sin(this.graphicangle + Math.PI*2/3));
             ctx.lineTo(this.x + this.srad2 * Math.cos(this.graphicangle + Math.PI*4/3), this.y + this.srad2 * Math.sin(this.graphicangle + Math.PI*4/3));
             ctx.closePath();
+            ctx.lineWidth = this.swid;
+            ctx.stroke();
+        } else if (this.graphic == "OVAL") {
+        	// Code Source for ellipse: https://stackoverflow.com/questions/14169234 (PokatilovArt)
+            ctx.strokeStyle = this.color;
+            let width_two_thirds = this.srad * 4 / 3;
+
+			let dx1 = Math.sin(this.graphicangle) * this.srad2;
+			let dy1 = Math.cos(this.graphicangle) * this.srad2;
+			let dx2 = Math.cos(this.graphicangle) * width_two_thirds;
+			let dy2 = Math.sin(this.graphicangle) * width_two_thirds;
+
+			let topCenterX = this.x - dx1;
+			let topCenterY = this.y + dy1;
+			let topRightX = topCenterX + dx2;
+			let topRightY = topCenterY + dy2;
+			let topLeftX = topCenterX - dx2;
+			let topLeftY = topCenterY - dy2;
+
+			let bottomCenterX = this.x + dx1;
+			let bottomCenterY = this.y - dy1;
+			let bottomRightX = bottomCenterX + dx2;
+			let bottomRightY = bottomCenterY + dy2;
+			let bottomLeftX = bottomCenterX - dx2;
+			let bottomLeftY = bottomCenterY - dy2;
+
+			ctx.beginPath();
+			ctx.moveTo(bottomCenterX, bottomCenterY);
+			ctx.bezierCurveTo(bottomRightX, bottomRightY, topRightX, topRightY, topCenterX, topCenterY);
+			ctx.bezierCurveTo(topLeftX, topLeftY, bottomLeftX, bottomLeftY, bottomCenterX, bottomCenterY);
+			ctx.closePath();
+            ctx.lineWidth = this.swid;
+            ctx.stroke();
+        } else if (this.graphic == "ARROWHEAD") {
+        	// Code adapted from Ellipse (As it is half an ellipse)
+        	// Note that we move 1/3 of srad downwards towards the bullet
+            ctx.strokeStyle = this.color;
+            let width_two_thirds = this.srad * 4 / 3;
+
+			let dx1 = Math.sin(this.graphicangle) * this.srad2;
+			let dy1 = Math.cos(this.graphicangle) * this.srad2;
+			let dx2 = Math.cos(this.graphicangle) * width_two_thirds;
+			let dy2 = Math.sin(this.graphicangle) * width_two_thirds;
+
+			let topCenterX = this.x - dx1 + this.srad/3*Math.cos(this.graphicangle + Math.PI);
+			let topCenterY = this.y + dy1 + this.srad/3*Math.sin(this.graphicangle + Math.PI);
+			let topRightX = topCenterX + dx2;
+			let topRightY = topCenterY + dy2;
+			let topLeftX = topCenterX - dx2;
+			let topLeftY = topCenterY - dy2;
+
+			let bottomCenterX = this.x + dx1 + this.srad/3*Math.cos(this.graphicangle + Math.PI);
+			let bottomCenterY = this.y - dy1 + this.srad/3*Math.sin(this.graphicangle + Math.PI);
+			let bottomRightX = bottomCenterX + dx2;
+			let bottomRightY = bottomCenterY + dy2;
+			let bottomLeftX = bottomCenterX - dx2;
+			let bottomLeftY = bottomCenterY - dy2;
+
+			ctx.beginPath();
+			ctx.moveTo(bottomCenterX, bottomCenterY);
+			ctx.bezierCurveTo(bottomRightX, bottomRightY, topRightX, topRightY, topCenterX, topCenterY);
+			
             ctx.lineWidth = this.swid;
             ctx.stroke();
         }

@@ -4,6 +4,9 @@ Only versions past 2.1 have their changes documented here.
 
 Source code and usage examples can be found on Github.
 
+### v2.2-dev6 [Nov 12, 2019]
+* Added support for Oval and Arrowhead shapes  
+
 ### v2.2-dev5 [Nov 11, 2019]
 * Added support for Triangle shape  
 * Decoupled font size from font in Text  

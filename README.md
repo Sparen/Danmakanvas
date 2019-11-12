@@ -107,6 +107,8 @@ Modes:
 * `CIRCLE` - Default. Stroke renders as a circle with `srad` radius  
 * `DIAMOND` - Used for squares and rhombi. Stroke renders as a rhombus with `srad` controlling the principal axis in the direction it faces and `srad2` controlling the secondary axis perpendicular to the direction it faces. It is recommended to use the `directed` field for rhombi.  
 * `TRIANGLE` - Used for isoceles and equilateral triangles. Stroke renders as a triangle with `srad` controlling the principal axis in the direction it faces and `srad2` controlling the distance to the other two points. It is recommended to use the `directed` field for triangles.  
+* `OVAL` - Used for ellipses. Stroke renders as an ellipse with `srad` controlling the principal axis for the direction it faces and `srad2` controlling the secondary axis perpendicular to the direction it faces. It is recommended to use the `directed` field for ellipses.  
+* `ARROWHEAD` - Used for arrowhead bullets. Stroke renders as an arrowhead with `srad` controlling the principal axis for the direction it faces and `srad2` controlling the secondary axis perpendicular to the direction it faces. The stroke is moved 1/3 of `srad` towards the bullet center. It is recommended to use the `directed` field for ellipses.  
 
 ### Miscellaneous
 

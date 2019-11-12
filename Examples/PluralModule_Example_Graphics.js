@@ -37,7 +37,7 @@ function Single_1(currgame) {
             let objctr = 0;
             for (objctr = 0; objctr < bullets.length; objctr += 1) {
                 let currbullet = bullets[objctr];
-                SetShotGraphic(currbullet, "DIAMOND", "#FF00FF", 1, 4, 8, 1, true, 0);
+                SetShotGraphic(currbullet, "DIAMOND", "#FF00FF", 1, 8, 4, 1, true, 0);
                 currbullet.customupdate = function() {applywvel(currbullet, 0.05 * currdir);}
             }
             let bullets2 = CreateRingStackA2(20, 2, 0.2, GetCenterX(currgame), GetCenterY(currgame), 0.1, randangle, 0.01, 12, "#00FFFF", 2, 3, 1, 1, -1, currgame);

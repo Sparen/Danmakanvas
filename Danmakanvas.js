@@ -239,10 +239,19 @@ function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid,
         } else if (this.graphic == "DIAMOND") {
             ctx.strokeStyle = this.color;
             ctx.beginPath();
-            ctx.moveTo(this.x + this.srad2 * Math.cos(this.graphicangle), this.y + this.srad2 * Math.sin(this.graphicangle));
-            ctx.lineTo(this.x + this.srad * Math.cos(this.graphicangle + Math.PI/2), this.y + this.srad * Math.sin(this.graphicangle + Math.PI/2));
-            ctx.lineTo(this.x + this.srad2 * Math.cos(this.graphicangle + Math.PI), this.y + this.srad2 * Math.sin(this.graphicangle + Math.PI));
-            ctx.lineTo(this.x + this.srad * Math.cos(this.graphicangle - Math.PI/2), this.y + this.srad * Math.sin(this.graphicangle - Math.PI/2));
+            ctx.moveTo(this.x + this.srad * Math.cos(this.graphicangle), this.y + this.srad * Math.sin(this.graphicangle));
+            ctx.lineTo(this.x + this.srad2 * Math.cos(this.graphicangle + Math.PI/2), this.y + this.srad2 * Math.sin(this.graphicangle + Math.PI/2));
+            ctx.lineTo(this.x + this.srad * Math.cos(this.graphicangle + Math.PI), this.y + this.srad * Math.sin(this.graphicangle + Math.PI));
+            ctx.lineTo(this.x + this.srad2 * Math.cos(this.graphicangle - Math.PI/2), this.y + this.srad2 * Math.sin(this.graphicangle - Math.PI/2));
+            ctx.closePath();
+            ctx.lineWidth = this.swid;
+            ctx.stroke();
+        } else if (this.graphic == "TRIANGLE") {
+            ctx.strokeStyle = this.color;
+            ctx.beginPath();
+            ctx.moveTo(this.x + this.srad * Math.cos(this.graphicangle), this.y + this.srad * Math.sin(this.graphicangle));
+            ctx.lineTo(this.x + this.srad2 * Math.cos(this.graphicangle + Math.PI*2/3), this.y + this.srad2 * Math.sin(this.graphicangle + Math.PI*2/3));
+            ctx.lineTo(this.x + this.srad2 * Math.cos(this.graphicangle + Math.PI*4/3), this.y + this.srad2 * Math.sin(this.graphicangle + Math.PI*4/3));
             ctx.closePath();
             ctx.lineWidth = this.swid;
             ctx.stroke();

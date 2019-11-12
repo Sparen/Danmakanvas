@@ -4,6 +4,9 @@ Only versions past 2.1 have their changes documented here.
 
 Source code and usage examples can be found on Github.
 
+### v2.2-dev5 [Nov 11, 2019]
+* Added support for Triangle shape  
+
 ### v2.2-dev4 [Nov 08, 2019]
 * Added `DMKText` object and general use `CreateText()` function for text object creation  
 * EnemyShot objects now have fields for their render fields (brad, srad, swid) as well as new graphic and swid2 parameters for custom graphics  

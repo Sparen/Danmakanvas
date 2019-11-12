@@ -42,6 +42,8 @@ function NewGame(canvasid, title) {
     this.context = this.canvas.getContext("2d");
     this.frameNo = 0;
 
+    this.framereset = true; // Whether or not to run clearCanvas every frame. Disabling allows for showing bullet trails.
+
     /* *****
      * void startGame(string canvasid)
      * -- Runs the canvas on the given canvas ID
@@ -93,7 +95,9 @@ function NewGame(canvasid, title) {
     //Main update loop. Calls the update loops of all objects and handles collision.
     //Since it's called in a setInterval, it is necessary to pass the current instance of the game object in as a parameter
     this.update_main = function (currgame) {
-        currgame.clearCanvas(); //Begin by clearing everything
+        if (currgame.framereset) {
+            currgame.clearCanvas(); //Begin by clearing everything
+        }
         currgame.frameNo += 1; //Increment the master counter
 
         currgame.pluralcontroller.update();

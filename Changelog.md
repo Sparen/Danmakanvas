@@ -6,6 +6,7 @@ Source code and usage examples can be found on Github.
 
 ### v2.2-dev6 [Nov 12, 2019]
 * Added support for Oval and Arrowhead shapes  
+* Enabled ability to disable clearing the playing field  
 
 ### v2.2-dev5 [Nov 11, 2019]
 * Added support for Triangle shape  

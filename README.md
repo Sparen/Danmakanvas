@@ -66,7 +66,7 @@ The following functions are provided as Object Constructors:
 Note that these should not be used as they have proper wrappers that reduce some of the overhead. If they must be used, please note that they must be called with `new`.  
 
 * `EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Creates an enemy shot with the provided parameters and returns the created object  
-* `DMKText(x, y, fillStyle, font, textAlign, content, currgame)` - Creates a Danmakanvas text object with the provided parameters and returns the created object.  
+* `DMKText(x, y, fillStyle, fontsize, font, textAlign, content, currgame)` - Creates a Danmakanvas text object with the provided parameters and returns the created object.  
 
 The following functions are provided as part of the Danmakanvas 'API':
 
@@ -97,7 +97,7 @@ Bullet Creation Functions:
 Object Functions:
 
 * `SetShotGraphic(shot, graphic, color, brad, srad, srad2, swid, directed, rotation)` - Changes the graphics settings for an Enemy Shot  
-* `CreateText(x, y, fillStyle, font, textAlign, content, currgame)` - Creates a text object
+* `CreateText(x, y, fillStyle, fontsize, font, textAlign, content, currgame)` - Creates a text object
 
 ### Bullet Graphics
 

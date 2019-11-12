@@ -65,9 +65,9 @@ function NewGame(canvasid, title) {
         }
 
         // Set up standard text objects
-        CreateText(4, 12, "#FFFFFF", "12px Arial", "left", VERSION_NUMBER_DANMAKANVAS, this);
-        CreateText(4, 24, "#FFFFFF", "12px Arial", "left", title, this);
-        this.bulletCountText = CreateText(4, this.canvas.height - 4, "#FFFFFF", "12px Arial", "left", "Bullet Count: " + (this.bullets.length).toString(), this);
+        CreateText(4, 12, "#FFFFFF", 12, "Arial", "left", VERSION_NUMBER_DANMAKANVAS, this);
+        CreateText(4, 24, "#FFFFFF", 12, "Arial", "left", title, this);
+        this.bulletCountText = CreateText(4, this.canvas.height - 4, "#FFFFFF", 12, "Arial", "left", "Bullet Count: " + (this.bullets.length).toString(), this);
     };
 
     this.setupInterval = function(updatefreq) {
@@ -261,19 +261,21 @@ function EnemyShot(x, y, speed, angle, accel, maxspeed, color, brad, srad, swid,
 }
 
 /* *****
- * obj DMKText(float x, float y, hex/rgb fillStyle, string font, string textAlign, string content, obj currgame)
+ * obj DMKText(float x, float y, hex/rgb fillStyle, int fontsize, string font, string textAlign, string content, obj currgame)
  * -- Constructor for a Danmakanvas Text object.
  * Param: x, y - the location of the text
  * Param: fillStyle - the color of the text
+ * Param: fontsize - the font size of the text
  * Param: font - the font of the text
  * Param: textAlign - the text alignment of the text. Possible values are start, end, left, center, and right
  * Param: content - the content of the text
  * Param: currgame - game/Danmakanvas Instance the bullet belongs to
  * *****/
-function DMKText(x, y, fillStyle, font, textAlign, content, currgame) {
+function DMKText(x, y, fillStyle, fontsize, font, textAlign, content, currgame) {
 	this.x = x;
     this.y = y;
     this.fillStyle = fillStyle;
+    this.fontsize = fontsize;
     this.font = font;
     this.textAlign = textAlign;
     this.content = content;
@@ -284,7 +286,7 @@ function DMKText(x, y, fillStyle, font, textAlign, content, currgame) {
     this.draw = function () {
         let ctx = currgame.context; //game window
         ctx.fillStyle = this.fillStyle;
-        ctx.font = this.font;
+        ctx.font = "" + this.fontsize + "px " + this.font;
         ctx.textAlign = this.textAlign;
         ctx.fillText(this.content, this.x, this.y);
     };
@@ -678,17 +680,18 @@ function SetShotGraphic(shot, graphic, color, brad, srad, srad2, swid, directed,
 }
 
 /* *****
- * obj CreateText(float x, float y, hex/rgb fillStyle, string font, string textAlign, string content, obj currgame)
+ * obj CreateText(float x, float y, hex/rgb fillStyle, int fontsize, string font, string textAlign, string content, obj currgame)
  * -- Creates a text object and adds it to the current danmakanvas instance. Returns created Danmakanvas Text Object
  * Param: x, y - the location of the text
  * Param: fillStyle - the color of the text
+ * Param: fontsize - the font size of the text
  * Param: font - the font of the text
  * Param: textAlign - the text alignment of the text. Possible values are start, end, left, center, and right
  * Param: content - the content of the text
  * Param: currgame - game/Danmakanvas Instance the bullet belongs to
  * *****/
-function CreateText(x, y, fillStyle, font, textAlign, content, currgame) {
-	let newtext = new DMKText(x, y, fillStyle, font, textAlign, content, currgame);
+function CreateText(x, y, fillStyle, fontsize, font, textAlign, content, currgame) {
+	let newtext = new DMKText(x, y, fillStyle, fontsize, font, textAlign, content, currgame);
 	currgame.text.push(newtext);
 	return newtext;
 }

@@ -75,8 +75,14 @@ General Functions:
 * `GetCenterX(currgame)` - Returns half the width of the canvas  
 * `GetCenterY(currgame)` - Returns half the height of the canvas  
 * `DeleteShot(bullet, currgame)` - Deletes the bullet from the game  
+* `GetDistanceObjObj(a, b)` - Returns the distance from object a to object b  
+* `GetDistanceCoordObj(x1, y1, b)` - Returns the distance from (x1, y1) to object b  
+* `GetDistanceCoordCoord(x1, y1, x2, y2)` - Returns the distance from (x1, y1) to (x2, y2)  
+* `GetAngleObjObj(a, b)` - Returns the angle from object a to object b  
+* `GetAngleCoordObj(x1, y1, b)` - Returns the angle from (x1, x2) to object b  
+* `GetAngleCoordCoord(x1, y1, x2, y2)` - Returns the angle from (x1, x2) to object b  
 
-Bullet Creation Functions:
+Bullet Object Creation Functions:
 
 - A1 variants set acceleration and max speed to 0 and set vanishtime to -1 (bullets only delete when out of bounds)
 - All bullet creation functions add the bullets to the game's list of bullets automatically
@@ -94,10 +100,13 @@ Bullet Creation Functions:
 * `CreateSpreadStackA1(n, m, angoffset, spdoffset, x, y, speed, angle, color, brad, srad, swid, hitbox, currgame)` - Combination of CreateSpreadA1 and CreateStackA1  
 * `CreateSpreadStackA2(n, m, angoffset, spdoffset, x, y, speed, angle, accel, maxspeed, color, brad, srad, swid, hitbox, vanishtime, currgame)` - Combination of CreateSpreadA1 and CreateStackA1  
 
+Other Object Creation Functions:
+
+* `CreateText(x, y, fillStyle, fontsize, font, textAlign, content, currgame)` - Creates a text object  
+
 Object Functions:
 
 * `SetShotGraphic(shot, graphic, color, brad, srad, srad2, swid, directed, rotation)` - Changes the graphics settings for an Enemy Shot  
-* `CreateText(x, y, fillStyle, fontsize, font, textAlign, content, currgame)` - Creates a text object
 
 ### Bullet Graphics
 
@@ -123,6 +132,7 @@ Example scripts are documented here. In recommended reading order, these are:
 3. [Example_Override](https://sparen.github.io/Danmakanvas/Examples/Example_Override.html) - Example showcasing overriding of EnemyShot `customupdate()` to induce special behavior  
 4. [Example_RingSpreadStack](https://sparen.github.io/Danmakanvas/Examples/Example_RingSpreadStack.html) - Example showcasing usage of GetCenterX/Y and some ring and stack functions. Also covers `customupdate()` overriding with these functions and provides more detail  
 5. [Example_Graphics](https://sparen.github.io/Danmakanvas/Examples/Example_Graphics.html) - Example showcasing usage of `SetShotGraphics()` with rhombi and squares. Demonstrates both the `directed` option and the standard rotating option.  
+6. [Example_Aimed](https://sparen.github.io/Danmakanvas/Examples/Example_Aimed.html) - Example showcasing usage of bullet aiming and distance functions.  
 
 ### Future Work
 

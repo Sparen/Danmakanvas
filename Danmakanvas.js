@@ -408,7 +408,73 @@ function DeleteShot(bullet, currgame) {
     }
 }
 
-/* **************** Bullet Creation Functions **************** */
+/* *****
+ * float GetDistanceObjObj(obj a, obj b)
+ * -- Returns the distance from object a to object b
+ * Param: a - Object 1
+ * Param: b - Object 2
+ * *****/
+function GetDistanceObjObj(a, b) {
+    return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
+}
+
+/* *****
+ * float GetDistanceCoordObj(float x1, float y1, obj b)
+ * -- Returns the distance from (x1, y1) to object b
+ * Param: x1 - X coordinate of first point
+ * Param: y1 - Y coordinate of first point
+ * Param: b - Target Object
+ * *****/
+function GetDistanceCoordObj(x1, y1, b) {
+    return Math.sqrt(Math.pow(b.x - x1, 2) + Math.pow(b.y - y1, 2));
+}
+
+/* *****
+ * float GetDistanceCoordCoord(float x1, float y1, float x2, float y2)
+ * -- Returns the distance from (x1, y1) to (x2, y2)
+ * Param: x1 - X coordinate of first point
+ * Param: y1 - Y coordinate of first point
+ * Param: x2 - X coordinate of second point
+ * Param: y2 - Y coordinate of second point
+ * *****/
+function GetDistanceCoordCoord(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
+/* *****
+ * float GetAngleObjObj(obj a, obj b)
+ * -- Returns the angle from object a to object b
+ * Param: a - Object 1
+ * Param: b - Object 2
+ * *****/
+function GetAngleObjObj(a, b) {
+    return Math.atan2(b.y - a.y, b.x - a.x);
+}
+
+/* *****
+ * float GetAngleCoordObj(float x1, float y1, obj b)
+ * -- Returns the angle from (x1, x2) to object b
+ * Param: x1 - X coordinate of first point
+ * Param: y1 - Y coordinate of first point
+ * Param: b - Target Object
+ * *****/
+function GetAngleCoordObj(x1, y1, b) {
+    return Math.atan2(b.y - y1, b.x - x1);
+}
+
+/* *****
+ * float GetAngleCoordCoord(float x1, float y1, float x2, float y2)
+ * -- Returns the angle from (x1, x2) to object b
+ * Param: x1 - X coordinate of first point
+ * Param: y1 - Y coordinate of first point
+ * Param: x2 - X coordinate of second point
+ * Param: y2 - Y coordinate of second point
+ * *****/
+function GetAngleCoordCoord(x1, y1, x2, y2) {
+    return Math.atan2(y2 - y1, x2 - x1);
+}
+
+/* **************** Bullet Object Creation Functions **************** */
 
 /* *****
  * obj CreateShotA1(float x, float y, float speed, float angle, hex/rgb color, float brad, float srad, float swid, int hitbox, obj currgame)
@@ -720,6 +786,25 @@ function CreateSpreadStackA2(n, m, angoffset, spdoffset, x, y, speed, angle, acc
     return spreadbullets;
 }
 
+/* **************** Other Object Creation Functions **************** */
+
+/* *****
+ * obj CreateText(float x, float y, hex/rgb fillStyle, int fontsize, string font, string textAlign, string content, obj currgame)
+ * -- Creates a text object and adds it to the current danmakanvas instance. Returns created Danmakanvas Text Object
+ * Param: x, y - the location of the text
+ * Param: fillStyle - the color of the text
+ * Param: fontsize - the font size of the text
+ * Param: font - the font of the text
+ * Param: textAlign - the text alignment of the text. Possible values are start, end, left, center, and right
+ * Param: content - the content of the text
+ * Param: currgame - game/Danmakanvas Instance the bullet belongs to
+ * *****/
+function CreateText(x, y, fillStyle, fontsize, font, textAlign, content, currgame) {
+    let newtext = new DMKText(x, y, fillStyle, fontsize, font, textAlign, content, currgame);
+    currgame.text.push(newtext);
+    return newtext;
+}
+
 /* **************** Object Functions **************** */
 
 /* *****
@@ -743,21 +828,4 @@ function SetShotGraphic(shot, graphic, color, brad, srad, srad2, swid, directed,
     shot.swid = swid;
     shot.directed = directed;
     shot.rotation = rotation;
-}
-
-/* *****
- * obj CreateText(float x, float y, hex/rgb fillStyle, int fontsize, string font, string textAlign, string content, obj currgame)
- * -- Creates a text object and adds it to the current danmakanvas instance. Returns created Danmakanvas Text Object
- * Param: x, y - the location of the text
- * Param: fillStyle - the color of the text
- * Param: fontsize - the font size of the text
- * Param: font - the font of the text
- * Param: textAlign - the text alignment of the text. Possible values are start, end, left, center, and right
- * Param: content - the content of the text
- * Param: currgame - game/Danmakanvas Instance the bullet belongs to
- * *****/
-function CreateText(x, y, fillStyle, fontsize, font, textAlign, content, currgame) {
-    let newtext = new DMKText(x, y, fillStyle, fontsize, font, textAlign, content, currgame);
-    currgame.text.push(newtext);
-    return newtext;
 }

@@ -4,6 +4,9 @@ Only versions past 2.1 have their changes documented here.
 
 Source code and usage examples can be found on Github.
 
+### v2.2-dev7 [Nov 15, 2019]
+* Added Distance and Angle functions  
+
 ### v2.2-dev6 [Nov 12, 2019]
 * Added support for Oval and Arrowhead shapes  
 * Enabled ability to disable clearing the playing field  

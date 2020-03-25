@@ -1,10 +1,8 @@
 //Extendible Danmaku Simulator & Game Engine
 //Version 2.2-dev
-//Copyright Andrew Fan 2019
+//Copyright Andrew Fan 2019-2020
 
 //Danmakanvas.js contains all components that are shared across the system.
-//Danmakanvas.js requires perfect and appropriate parameter usage since ES6's Default Parameters are not yet supported by all browsers.
-//It requires a module to handle the player
 //It requires a script to handle the plural
 
 "use strict"; //Sanity check
@@ -15,21 +13,45 @@
 //Constructors should start in Uppercase. Variables should be in camelCase.
 //Variables and Functions are hoisted (they can be used before they are declared)
 
-//Global letiables (use sparingly)
-let startedplurals = []; //array containing IDs of all canvases that have already initiated.
+//Global variables (use sparingly)
+let games = {}; //ongoing games
 
 //Version number
-const VERSION_NUMBER_DANMAKANVAS = "Danmakanvas v2.2-dev";
+const VERSION_NUMBER_DANMAKANVAS = "Danmakanvas v2.3-dev";
 
 /* *****
- * void createNewGame(string canvasid)
+ * void createNewGame(string canvasid, string title)
  * -- Creates a new game
  * Param: canvasid - the string containing the id of the canvas to use. 
+ * Param: title - the name of the canvas, which will be rendered on-screen
  * *****/
 function createNewGame(canvasid, title) {
-    console.log("createNewGame(): Now Running");
+    if (games[canvasid] !== null && games[canvasid] !== undefined) {
+        // It already exists. We will destroy it and restart it.
+        stopGame(canvasid);
+    }
     let newgame = new NewGame(canvasid, title);
     newgame.startGame(canvasid);
+    games[canvasid] = newgame; // Keep track of it
+    console.log("createNewGame(): Started game running on Canvas " + canvasid);
+}
+
+/* *****
+ * void stopGame(string canvasid)
+ * -- Creates a new game
+ * Param: canvasid - the string containing the id of the canvas to use. 
+ * Param: clearFrame - boolean dictating whether or not to clear the canvas. Optional.
+ * *****/
+function stopGame(canvasid, clearFrame) {
+    if (games[canvasid] !== null && games[canvasid] !== undefined) {
+        let currgame = games[canvasid];
+        currgame.teardown(); // Unlink all contents of the existing so that they can be garbage collected
+        games[canvasid] = null; // Remove reference to main object to enable garbage collection
+        console.log("stopGame(): Stopped game running on Canvas " + canvasid);
+        if (clearFrame === true) {
+            currgame.clearCanvas();
+        }
+    }
 }
 
 //Constructor for the object
@@ -50,21 +72,14 @@ function NewGame(canvasid, title) {
      * Param: canvasid - the string containing the id of the canvas to use. 
      * *****/
     this.startGame = function (canvasid) {
-        console.log("startGame(): Running on canvas with id " + canvasid);
-        this.resetGame(); //reset the current canvas by purging all elements
-
         //Obtain the plural controller
         this.pluralcontroller = getPluralController(this, canvasid);
         if (this.pluralcontroller === null) {
             console.log("startGame(): Returned pluralcontroller was null");
         }
 
-        //If the interval has not been started yet, begin it.
-        if (!this.contains(startedplurals, canvasid)) {
-            console.log("startGame(): Canvas " + canvasid + " has not been started yet. Initializing this.interval for the canvasid");
-            startedplurals.push(canvasid);
-            this.setupInterval(20);
-        }
+        console.log("startGame(): Initializing this.interval for the Canvas " + canvasid);
+        this.setupInterval(20);
 
         // Set up standard text objects
         CreateText(4, 12, "#FFFFFF", 12, "Arial", "left", VERSION_NUMBER_DANMAKANVAS, this);
@@ -73,11 +88,16 @@ function NewGame(canvasid, title) {
     };
 
     this.setupInterval = function(updatefreq) {
-        setInterval(this.update_main, updatefreq, this); //in milliseconds. Runs update every 20 millis (50 FPS). canvasid is passed to update_main
+        this.interval = setInterval(this.update_main, updatefreq, this); //in milliseconds. Runs update every 20 millis (50 FPS). canvasid is passed to update_main
     };
 
-    //Clear all bullets, etc. Every existing update must terminate.
-    this.resetGame = function () {
+    // This method destroys the contents of the entire game object. It can only be called once per game.
+    this.teardown = function () {
+        if (this.interval !== null && this.interval !== undefined) {
+            // Stop execution of the timer
+            clearInterval(this.interval);
+            this.interval = null;
+        }
         this.player = {};
         this.bullets = [];
         this.text = [];
@@ -85,7 +105,6 @@ function NewGame(canvasid, title) {
             this.pluralcontroller.remove(); //Forcefully garbage collect all ongoing singles and plurals
         }
         this.pluralcontroller = {};
-        this.frameNo = 0;
     };
 
     this.clearCanvas = function () {

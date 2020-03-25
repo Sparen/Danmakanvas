@@ -4,6 +4,11 @@ Only versions past 2.1 have their changes documented here.
 
 Source code and usage examples can be found on Github.
 
+### v2.3-dev1 [Mar 25, 2020]
+* Added `stopGame()` functionality to end execution of a canvas  
+* Trying to create a new game now destroys the old one and creates a new one if one already exists, unlike before where nothing happened  
+* Added `clearFrame` functionality to `stopGame()`  
+
 ### v2.2-dev7 [Nov 15, 2019]
 * Added Distance and Angle functions  
 

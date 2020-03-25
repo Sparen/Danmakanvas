@@ -16,15 +16,15 @@ This project is currently not accepting contributions in the form of code. If bu
 
 ## Components
 
-To run Danmakanvas, you must have an HTML source file. This source file must contain a canvas with an ID, height, and width. Note that the actual engine does NOT know the height and width of the canvas. The HTML source must include two scripts - the engine, and what I call a 'PluralModule'. Further details will be provided below.
+To run Danmakanvas, you must have an HTML source file. This source file must contain a canvas with an ID, height, and width. The HTML source must include two scripts - the engine, and what I call a 'PluralModule'. Further details will be provided below.
 
 ### The Game Engine
 
-The game engine contains two control functions - `createNewGame(canvasid, title)` and `NewGame(canvasid, title)`. The HTML file must call `createNewGame()` in order to start a Danmakanvas Instance. The canvas ID passed as a parameter is used as the primary identifier of the Danmakanvas Instance. 
+The game engine contains two control functions - `createNewGame(canvasid, title)` and `stopGame(canvasid, clearFrame)`. The HTML file must call `createNewGame()` in order to start or restart a Danmakanvas Instance. Stopping the canvas via `stopGame()` will leave the canvas showing the last rendered frame unless the optional parameter `clearFrame` is set to true. The canvas ID passed as a parameter is used as the primary identifier of the Danmakanvas Instance. 
 
-Each new game keeps track of the bullets, current plurals running, the canvas, and the frame counter, among other things. The NewGame objects have functionality to start a game associated with a canvas ID, which resets the current Danmakanvas Instance associated with the canvas ID. The actual code to run in the instances is located in the Plural Modules, which will be discussed shortly.
+Each new game keeps track of the bullets, current plurals running, the canvas, and the frame counter, among other things. The NewGame objects have functionality to start a game associated with a canvas ID. As of v2.3, they are no longer capable of resetting themselves internally and must be reset from outside (which is what `stopGame()` does). The actual code to run in the instances is located in the Plural Modules, which will be discussed shortly.
 
-When a new game is started, it also sets an interval to run a main update loop if one is not already running for the provided canvas ID. This ensures that while multiple Danmakufu Instances can run, trying to restart an existing one will reset it without compromising it in any way. The main update loop (`update_main()`) wipes the canvas (to allow the updates to be drawn), then directs the plural controller to update (this will be discussed soon). It checks every bullet and forces them to update, then removes bullets that are out of bounds as well as bullets that have existed longer than their specified lifespan. The bullets are rendered, as well as some debug text.
+When a new game is started, it sets an interval to run a main update loop for the provided canvas ID. This ensures that multiple Danmakufu Instances can run in parallel. The main update loop (`update_main()`) wipes the canvas (to allow the updates to be drawn), then directs the plural controller to update (this will be discussed soon). It checks every bullet and forces them to update, then removes bullets that are out of bounds as well as bullets that have existed longer than their specified lifespan. The bullets are rendered, as well as some debug text.
 
 The main update loop for any canvas runs *every 20 ms*, or *50 FPS*.
 

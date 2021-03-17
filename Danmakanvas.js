@@ -1,6 +1,6 @@
 //Extendible Danmaku Simulator & Game Engine
-//Version 2.2-dev
-//Copyright Andrew Fan 2019-2020
+//Version 2.3-dev
+//Copyright Andrew Fan 2019-2021
 
 //Danmakanvas.js contains all components that are shared across the system.
 //It requires a script to handle the plural
